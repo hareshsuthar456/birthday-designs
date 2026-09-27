@@ -1,115 +1,109 @@
 <!DOCTYPE html>
-<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Birthday Post Generator</title><style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap');
-#vsbGenerator{--brown:#4a2410;--brown2:#75421e;--gold:#d9a72e;--cream:#fff8e8;--line:#ead9bd;--ink:#30170b;--muted:#7c624b;--blue:#2b67a5;width:100%;min-height:100vh;background:linear-gradient(135deg,#241106,#5a3017 48%,#2d1609);font-family:"Noto Sans Devanagari",Arial,sans-serif;color:var(--ink)}
-#vsbGenerator *{box-sizing:border-box}
-#vsbGenerator .vsb-shell{width:min(100%,1080px);margin:auto;padding:22px 16px 30px}
-#vsbGenerator .vsb-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:14px 16px;border:1px solid #e3bd61;border-radius:18px;background:#371b0ced;color:white;box-shadow:0 12px 35px #160b0555}
-#vsbGenerator .vsb-brand{display:flex;align-items:center;gap:12px;min-width:0}
-#vsbGenerator .vsb-logo{flex:0 0 44px;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#f2ca54,#8c4a18);font-size:23px;font-weight:800}
-#vsbGenerator .vsb-title{font-size:18px;font-weight:900;line-height:1.2}
-#vsbGenerator .vsb-subtitle{font-size:11px;color:#f2d991;margin-top:3px;line-height:1.35}
-#vsbGenerator .vsb-badge{font-size:10px;font-weight:800;white-space:nowrap;border:1px solid #d8a765;border-radius:999px;padding:7px 10px;color:#ffe39a}
-#vsbGenerator .vsb-card,#vsbGenerator .vsb-result{background:#fffaf1;border:1px solid #e3c894;border-radius:20px;box-shadow:0 20px 55px #160b0538;overflow:hidden}
-#vsbGenerator .vsb-card{padding:22px}
-#vsbGenerator .vsb-step{display:flex;align-items:center;gap:11px}
-#vsbGenerator .vsb-step>span{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 32px;background:var(--gold);color:var(--brown);font-weight:900;font-size:14px}
-#vsbGenerator .vsb-step strong{display:block;font-size:17px;color:var(--brown)}
-#vsbGenerator .vsb-step small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-#vsbGenerator .vsb-section{border-top:1px solid var(--line);margin-top:19px;padding-top:17px}
-#vsbGenerator .vsb-section-title{font-size:13px;font-weight:900;color:var(--brown2);margin-bottom:12px}
-#vsbGenerator .vsb-grid{display:grid;gap:12px}
-#vsbGenerator .vsb-grid-2{grid-template-columns:1fr 1fr}
-#vsbGenerator .vsb-field{margin-bottom:12px}
-#vsbGenerator .vsb-field:last-child{margin-bottom:0}
-#vsbGenerator label{display:block;font-size:11px;font-weight:800;color:#5d351e;margin:0 0 6px}
-#vsbGenerator label em{font-style:normal;color:#a73a19}
-#vsbGenerator input,#vsbGenerator textarea{width:100%;border:1px solid #dbc4a2;background:#fff;border-radius:10px;padding:11px 12px;font:inherit;font-size:12px;color:var(--ink);outline:none;min-height:42px}
-#vsbGenerator textarea{min-height:84px;resize:vertical;line-height:1.5}
-#vsbGenerator input:focus,#vsbGenerator textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d9a72e24}
-#vsbGenerator .vsb-file{padding:8px;background:#fbf2e4}
-#vsbGenerator .vsb-form-footer{border-top:1px solid var(--line);margin-top:20px;padding-top:17px}
-#vsbGenerator .vsb-note{font-size:10px;color:#81684f;margin-bottom:10px}
-#vsbGenerator button{border:0;font:800 12px "Noto Sans Devanagari",Arial,sans-serif;cursor:pointer;border-radius:11px;padding:12px 15px;transition:.18s}
-#vsbGenerator button:hover{transform:translateY(-1px);filter:brightness(1.04)}
-#vsbGenerator .vsb-generate{width:100%;background:linear-gradient(135deg,#7f3e16,#d6a52c);color:white;box-shadow:0 8px 18px #6c35152b;font-size:13px;padding:14px}
-#vsbGenerator .vsb-result{padding:18px}
-#vsbGenerator .vsb-result-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
-#vsbGenerator .vsb-edit{background:#f0e1ca;color:#5b2d13;white-space:nowrap}
-#vsbGenerator .vsb-preview{display:flex;justify-content:center;padding:2px}
-#vsbGenerator .vsb-preview-frame{width:min(100%,540px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;border:1px solid #d7b05c;background:#ddd;box-shadow:0 20px 50px #160b0533}
-#vsbGenerator #canvas{display:block;width:100%;height:100%}
-#vsbGenerator .vsb-result-actions{width:min(100%,540px);margin:15px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-#vsbGenerator .vsb-download{background:linear-gradient(135deg,#7f3e16,#d6a52c);color:#fff}
-#vsbGenerator .vsb-share{background:var(--blue);color:#fff}
-#vsbGenerator .vsb-output-note{text-align:center;color:#8a6e54;font-size:10px;margin-top:9px}
-#vsbGenerator .vsb-footer{text-align:center;color:#ead7b9;font-size:10px;margin-top:15px}
-@media(max-width:650px){#vsbGenerator .vsb-shell{padding:10px 8px 22px}#vsbGenerator .vsb-header{padding:12px;border-radius:14px;margin-bottom:10px}#vsbGenerator .vsb-badge{display:none}#vsbGenerator .vsb-card,#vsbGenerator .vsb-result{border-radius:15px}#vsbGenerator .vsb-card{padding:16px 13px}#vsbGenerator .vsb-grid-2{grid-template-columns:1fr}#vsbGenerator .vsb-section{margin-top:16px;padding-top:14px}#vsbGenerator .vsb-result{padding:12px}#vsbGenerator .vsb-result-head{align-items:flex-start}#vsbGenerator .vsb-step strong{font-size:15px}#vsbGenerator .vsb-step small{font-size:10px}#vsbGenerator .vsb-result-actions{grid-template-columns:1fr}}
-@media(max-width:390px){#vsbGenerator .vsb-title{font-size:15px}#vsbGenerator .vsb-subtitle{font-size:9px}}
-</style></head>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shree Vishwakarma Suthar Samaj - Birthday Post Generator</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap');
+:root{
+  --brown-950:#2a1408; --brown-900:#3a1c0d; --brown-800:#552a12;
+  --brown-700:#75421e; --brown-500:#a66a2d; --brown-300:#d8a765;
+  --gold:#d9a72e; --gold-light:#f4d477; --cream:#fff8e8;
+  --yellow:#f2c94c; --blue:#2b67a5; --blue-dark:#174c86;
+  --ink:#30170b; --muted:#76563b; --white:#fffdf8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#211006,#5b3017 45%,#2d1609);font-family:"Noto Sans Devanagari",sans-serif;color:#fff}
+.app{min-height:100vh;display:grid;grid-template-columns:minmax(300px,390px) 1fr;gap:22px;padding:22px;max-width:1500px;margin:auto}
+.panel{background:rgba(255,250,240,.97);color:var(--ink);border:1px solid rgba(244,212,119,.45);border-radius:20px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.28);height:max-content;position:sticky;top:22px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.brand-mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,var(--gold),#8d4b17);display:grid;place-items:center;font-size:23px;box-shadow:inset 0 1px 0 #fff8}
+h1{font-size:18px;line-height:1.25;margin:0}.sub{font-size:11px;color:var(--muted);margin-top:2px}
+.section{border-top:1px solid #ead9bd;padding-top:15px;margin-top:15px}
+.section h2{font-size:13px;margin:0 0 10px;color:var(--brown-800)}
+label{font-size:11px;font-weight:800;display:block;margin:9px 0 5px;color:#5d351e}
+input,textarea,select{width:100%;border:1px solid #ddc7a7;background:#fffdf9;border-radius:10px;padding:10px 11px;font:inherit;font-size:12px;color:var(--ink);outline:none}
+textarea{min-height:78px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d9a72e22}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.file{padding:8px;background:#f8efe0}.hint{font-size:10px;color:#8b7259;line-height:1.4;margin-top:5px}
+button{border:0;border-radius:11px;padding:12px 14px;font:800 12px inherit;cursor:pointer;transition:.2s}
+.primary{width:100%;background:linear-gradient(135deg,#8a4618,#d6a52c);color:#fff;box-shadow:0 7px 18px #6c35152e}
+.secondary{background:#f0e1ca;color:#5b2d13}.blue{background:var(--blue);color:white}
+button:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.stage{display:flex;justify-content:center;align-items:flex-start;min-width:0}
+.preview-wrap{width:min(100%,540px);position:relative}
+.preview-frame{width:100%;aspect-ratio:9/16;background:#ddd;border-radius:16px;overflow:hidden;box-shadow:0 28px 80px rgba(0,0,0,.38);border:1px solid #f1cf6c}
+#canvas{width:100%;height:100%;display:block}
+.status{font-size:10px;text-align:center;color:#e9d9c4;margin-top:10px}
+@media(max-width:900px){.app{grid-template-columns:1fr;padding:12px}.panel{position:relative;top:0}.preview-wrap{width:min(100%,520px);margin:auto}.stage{order:-1}}
+@media(max-width:520px){.app{padding:8px}.panel{padding:15px;border-radius:16px}.actions{grid-template-columns:1fr}.preview-wrap{width:100%}}
+</style>
+</head>
 <body>
-<div id="vsbGenerator">
-  <div class="vsb-shell">
-    <header class="vsb-header">
-      <div class="vsb-brand">
-        <div class="vsb-logo">ॐ</div>
-        <div><div class="vsb-title">Birthday Post Generator</div>
-        <div class="vsb-subtitle">श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट • अहमदाबाद</div></div>
-      </div>
-      <div class="vsb-badge">1080 × 1920</div>
-    </header>
+<div class="app">
+  <aside class="panel">
+    <div class="brand">
+      <div class="brand-mark">ॐ</div>
+      <div><h1>Birthday Post Generator</h1><div class="sub">श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट • अहमदाबाद</div></div>
+    </div>
 
-    <section id="vsbFormView" class="vsb-card">
-      <div class="vsb-step"><span>1</span><div><strong>जानकारी भरें</strong><small>Birthday post के लिए details भरें</small></div></div>
+    <div class="section">
+      <h2>1. Trust Header</h2>
+      <label>Trust Name</label>
+      <input id="trust" value="श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट">
+      <label>Location</label>
+      <input id="city" value="अहमदाबाद">
+      <label>Vishwakarma Ji Photo</label>
+      <input id="godPhoto" class="file" type="file" accept="image/*">
+      <div class="hint">ऊपर भगवान श्री विश्वकर्मा जी का फोटो रखें। Transparent PNG/JPG अच्छा रहेगा।</div>
+    </div>
 
-      <div class="vsb-section">
-        <div class="vsb-section-title">Trust Details</div>
-        <div class="vsb-grid vsb-grid-2">
-          <div class="vsb-field"><label>Trust Name</label><input id="trust" value="श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट"></div>
-          <div class="vsb-field"><label>Location</label><input id="city" value="अहमदाबाद"></div>
-        </div>
-        <div class="vsb-field"><label>भगवान श्री विश्वकर्मा जी का फोटो</label><input id="godPhoto" class="vsb-file" type="file" accept="image/*"></div>
+    <div class="section">
+      <h2>2. Birthday Person</h2>
+      <label>Person Photo</label>
+      <input id="personPhoto" class="file" type="file" accept="image/*">
+      <label>Name</label>
+      <input id="name" value="श्री विजयजी चौयल">
+      <div class="row">
+        <div><label>राशि (Amount)</label><input id="rashi" value="₹ 11,000" placeholder="उदा. ₹ 11,000"></div>
+        <div><label>Designation</label><input id="designation" value="समाजसेवी"></div>
       </div>
+    </div>
 
-      <div class="vsb-section">
-        <div class="vsb-section-title">Birthday Person</div>
-        <div class="vsb-field"><label>व्यक्ति का फोटो <em>*</em></label><input id="personPhoto" class="vsb-file" type="file" accept="image/*"></div>
-        <div class="vsb-grid vsb-grid-2">
-          <div class="vsb-field"><label>नाम <em>*</em></label><input id="name" placeholder="पूरा नाम लिखें"></div>
-          <div class="vsb-field"><label>पद / परिचय</label><input id="designation" value="समाजसेवी" placeholder="उदा. समाजसेवी"></div>
-        </div>
-        <div class="vsb-field"><label>राशि (Amount)</label><input id="rashi" placeholder="उदा. ₹ 11,000"></div>
-      </div>
+    <div class="section">
+      <h2>3. Greeting Content</h2>
+      <label>Main Heading</label>
+      <input id="heading" value="जन्मदिन की हार्दिक शुभकामनाएं एवं बधाई">
+      <label>Message</label>
+      <textarea id="message">भगवान श्री विश्वकर्मा जी की कृपा से आपका जीवन स्वस्थ, सुखी, समृद्ध एवं मंगलमय हो। आप सदैव समाज की एकता, संस्कार और सेवा की भावना को आगे बढ़ाते रहें।</textarea>
+      <label>Trust Closing</label>
+      <textarea id="closing">श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट, अहमदाबाद की ओर से सादर शुभकामनाएं एवं मंगलकामनाएं।</textarea>
+    </div>
 
-      <div class="vsb-section">
-        <div class="vsb-section-title">Greeting Message</div>
-        <div class="vsb-field"><label>Main Heading</label><input id="heading" value="जन्मदिन की हार्दिक शुभकामनाएं एवं बधाई"></div>
-        <div class="vsb-field"><label>Message</label><textarea id="message">भगवान श्री विश्वकर्मा जी की कृपा से आपका जीवन स्वस्थ, सुखी, समृद्ध एवं मंगलमय हो। आप सदैव समाज की एकता, संस्कार और सेवा की भावना को आगे बढ़ाते रहें।</textarea></div>
-        <div class="vsb-field"><label>Trust Closing</label><textarea id="closing">श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट, अहमदाबाद की ओर से सादर शुभकामनाएं एवं मंगलकामनाएं।</textarea></div>
-        <div class="vsb-field"><label>Community Values</label><input id="values" value="एकता • संस्कार • सेवा • प्रगति"></div>
-      </div>
+    <div class="section">
+      <h2>4. Post Style</h2>
+      <label>Community Values Line</label>
+      <input id="values" value="एकता • संस्कार • सेवा • प्रगति">
+      <div class="hint">ब्राउन/गोल्ड मुख्य रंग हैं; नीला केवल लगभग 5% accent के रूप में रखा गया है।</div>
+    </div>
 
-      <div class="vsb-form-footer">
-        <div class="vsb-note">✓ जानकारी आपके browser में ही process होगी।</div>
-        <button class="vsb-generate" id="generate">Generate Birthday Post →</button>
-      </div>
-    </section>
+    <button class="primary" id="download">⬇ Download HD 1080 × 1920 PNG</button>
+    <div class="actions">
+      <button class="secondary" id="reset">Reset</button>
+      <button class="blue" id="share">↗ Share</button>
+    </div>
+  </aside>
 
-    <section id="vsbResultView" class="vsb-result" hidden>
-      <div class="vsb-result-head">
-        <div class="vsb-step"><span>2</span><div><strong>Your Birthday Post</strong><small>Design तैयार है — नीचे Download या Share करें</small></div></div>
-        <button class="vsb-edit" id="edit">← Edit Details</button>
-      </div>
-      <div class="vsb-preview"><div class="vsb-preview-frame"><canvas id="canvas" width="1080" height="1920"></canvas></div></div>
-      <div class="vsb-result-actions">
-        <button class="vsb-download" id="download">⬇ Download HD PNG</button>
-        <button class="vsb-share" id="share">↗ Share / WhatsApp</button>
-      </div>
-      <div class="vsb-output-note">HD output: 1080 × 1920 px • WhatsApp Status 9:16</div>
-    </section>
-    <footer class="vsb-footer">Auto Design System by - Haresh Suthar (weyggle.com)</footer>
-  </div>
+  <main class="stage">
+    <div class="preview-wrap">
+      <div class="preview-frame"><canvas id="canvas" width="1080" height="1920"></canvas></div>
+      <div class="status">WhatsApp Status • 1080 × 1920 px • 9:16</div>
+    </div>
+  </main>
 </div>
+
 <script>
 const $=id=>document.getElementById(id);
 const canvas=$('canvas'), ctx=canvas.getContext('2d');
@@ -126,7 +120,9 @@ function loadFile(input, cb){
 loadFile($('godPhoto'), im=>godImg=im);
 loadFile($('personPhoto'), im=>personImg=im);
 
-
+['trust','city','name','rashi','designation','heading','message','closing','values'].forEach(id=>{
+  $(id).addEventListener('input',draw);
+});
 
 function rr(x,y,w,h,r,fill,stroke,lw=1){
   ctx.beginPath();ctx.roundRect(x,y,w,h,r);
@@ -305,15 +301,15 @@ $('share').onclick=async()=>{
     }else alert('Mobile browser में Share support उपलब्ध नहीं है। पहले PNG Download करें और WhatsApp Status पर शेयर करें।');
   },'image/png');
 };
+$('reset').onclick=()=>{
+  $('trust').value='श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट';
+  $('city').value='अहमदाबाद';$('name').value='श्री विजयजी चौयल';$('rashi').value='₹ 11,000';
+  $('designation').value='समाजसेवी';$('heading').value='जन्मदिन की हार्दिक शुभकामनाएं एवं बधाई';
+  $('message').value='भगवान श्री विश्वकर्मा जी की कृपा से आपका जीवन स्वस्थ, सुखी, समृद्ध एवं मंगलमय हो। आप सदैव समाज की एकता, संस्कार और सेवा की भावना को आगे बढ़ाते रहें।';
+  $('closing').value='श्री विश्वकर्मा सुथार समाज सेवा ट्रस्ट, अहमदाबाद की ओर से सादर शुभकामनाएं एवं मंगलकामनाएं।';
+  $('values').value='एकता • संस्कार • सेवा • प्रगति';draw();
+};
 draw();
-
-const formView=$('vsbFormView'), resultView=$('vsbResultView');
-$('generate').addEventListener('click',()=>{
-  if(!$('name').value.trim()){alert('कृपया जन्मदिन वाले व्यक्ति का नाम भरें।');$('name').focus();return;}
-  if(!personImg){alert('कृपया व्यक्ति का फोटो upload करें।');$('personPhoto').focus();return;}
-  draw(); formView.hidden=true; resultView.hidden=false; window.scrollTo({top:0,behavior:'smooth'});
-});
-$('edit').addEventListener('click',()=>{
-  resultView.hidden=true; formView.hidden=false; window.scrollTo({top:0,behavior:'smooth'});
-});
-</script></body></html>
+</script>
+</body>
+</html>
